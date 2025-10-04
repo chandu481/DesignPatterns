@@ -1,0 +1,9 @@
+The Strategy Pattern typically involves three parts:
+
+Strategy (Interface) – defines a common interface for all supported algorithms.
+
+Concrete Strategies – implement different variations of the algorithm.
+
+Context – uses a Strategy object and delegates the work to it.
+
+The Strategy Pattern is a behavioral design pattern that allows you to define a family of algorithms, encapsulate each one, and make them interchangeable.
