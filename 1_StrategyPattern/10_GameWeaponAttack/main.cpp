@@ -38,40 +38,40 @@ public :
 };
 
 //step3 : Context
-class Weapon
+class Character
 {
-    std::unique_ptr<WeaponStrategy> strategy;
+    std::unique_ptr<WeaponStrategy> weapon;
 public :
-    void setWeapon(std::unique_ptr<WeaponStrategy> s)
+    void equipWeapon(std::unique_ptr<WeaponStrategy> newWeapon)
     {
-        strategy = std::move(s);
+        weapon = std::move(newWeapon);
     }
 
     void attack() 
     {
-        if(strategy)
+        if(weapon)
         {
-            strategy->attack();
+            weapon->attack();
         }
         else 
         {
-            std::cout<<"attackStrategy not set"<<std::endl;
+            std::cout<<"no weapon equipped"<<std::endl;
         }
     }
 };
 
 int main()
 {
-    Weapon w;
+    Character hero;
 
-    w.setWeapon(std::make_unique<SwordStrategy>());
-    w.attack();
+    hero.equipWeapon(std::make_unique<SwordStrategy>());
+    hero.attack();
 
-    w.setWeapon(std::make_unique<BowStrategy>());
-    w.attack();
+    hero.equipWeapon(std::make_unique<BowStrategy>());
+    hero.attack();
 
-    w.setWeapon(std::make_unique<MagicStrategy>());
-    w.attack();
+    hero.equipWeapon(std::make_unique<MagicStrategy>());
+    hero.attack();
     
     return 0;
 }
