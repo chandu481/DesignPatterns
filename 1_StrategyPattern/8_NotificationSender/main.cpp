@@ -27,7 +27,7 @@ public :
     }
 };
 
-class SMSNotification : public NotificationStratergy
+class SMSNotification final : public NotificationStratergy
 {
     std::string phoneNumber;
 public :
@@ -44,7 +44,7 @@ public :
     }
 };
 
-class PushNotification : public NotificationStratergy
+class PushNotification final : public NotificationStratergy
 {
 public :
     bool send(const std::string& msg) override 
