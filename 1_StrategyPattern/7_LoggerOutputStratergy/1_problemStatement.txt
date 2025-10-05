@@ -1,0 +1,8 @@
+Example: Logger Output Strategy
+🎯 Problem:
+
+You want your program to log messages in different ways:
+
+Console log
+
+File log
