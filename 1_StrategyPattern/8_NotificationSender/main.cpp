@@ -5,19 +5,25 @@
 class NotificationStratergy
 {
 public :
-    virtual void send(const std::string& msg) = 0;
+    virtual bool send(const std::string& msg) = 0;
     virtual ~NotificationStratergy() = default;
 };
 
 // STEP2 : Concrete Stratergy
-class EmailNotification : public NotificationStratergy
+class EmailNotification final : public NotificationStratergy
 {
     std::string email;
 public :
     EmailNotification(std::string emailAvg) : email(emailAvg) {}
-    void send(const std::string& msg)
+    bool send(const std::string& msg) override 
     {
+        if(email.find('@') == std::string::npos)
+        {
+            std::cerr<<"[Email] invalid address : "<<email<<std::endl;
+            return false;
+        }
         std::cout<<"Sending Email Notification Msg  : "<< msg << " to email : "<<email<<std::endl;
+        return true;
     }
 };
 
@@ -26,18 +32,25 @@ class SMSNotification : public NotificationStratergy
     std::string phoneNumber;
 public :
     SMSNotification(std::string phoneNumberAvg) : phoneNumber(phoneNumberAvg) {}
-    void send(const std::string& msg) override
+    bool send(const std::string& msg) override
     {
+        if(phoneNumber.empty() == true || isdigit(static_cast<unsigned char>(phoneNumber[0])) == false)
+        {
+            std::cerr<<"PhoneNumber is invalid : "<<phoneNumber<<std::endl;
+            return false;
+        }
         std::cout<<"Sending SMS Notificaiton Msg : "<<msg<<" to PhoneNumber : "<<phoneNumber<<std::endl;
+        return true;
     }
 };
 
 class PushNotification : public NotificationStratergy
 {
 public :
-    void send(const std::string& msg) override 
+    bool send(const std::string& msg) override 
     {
         std::cout<<"Push notification msg : "<<msg<<std::endl;
+        return true;
     }
 };
 
@@ -46,7 +59,7 @@ class Notifier
 {
     std::unique_ptr<NotificationStratergy> stratergy;
 public :
-    void setNotifier(std::unique_ptr<NotificationStratergy> s)
+    void setStratergy(std::unique_ptr<NotificationStratergy> s)
     {
         stratergy = std::move(s);
     }
@@ -68,13 +81,13 @@ int main()
 {
     Notifier notifier;
 
-    notifier.setNotifier(std::make_unique<EmailNotification>("charan481@gmail.com"));
+    notifier.setStratergy(std::make_unique<EmailNotification>("charan481@gmail.com"));
     notifier.notify("this is testing msg1");
 
-    notifier.setNotifier(std::make_unique<SMSNotification>("93929394059"));
+    notifier.setStratergy(std::make_unique<SMSNotification>("93929394059"));
     notifier.notify("this is testing msg2 ");
 
-    notifier.setNotifier(std::make_unique<PushNotification>());
+    notifier.setStratergy(std::make_unique<PushNotification>());
     notifier.notify("this is testing msg3");
     
     return 0;
