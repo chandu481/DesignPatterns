@@ -1,0 +1,10 @@
+🎯 Problem:
+Enemies in a game can behave differently depending on difficulty level or mood:
+
+Aggressive – attacks constantly
+
+Defensive – blocks and retreats
+
+Passive – avoids fighting
+
+We can use the Strategy Pattern to change behavior dynamically.
