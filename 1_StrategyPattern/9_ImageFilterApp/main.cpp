@@ -1,11 +1,17 @@
 #include <iostream>
 #include <memory>
 
+struct Image
+{
+    std::string name;
+    Image(std::string nameArg) : name(nameArg) {}
+};
+
 // STEP1 : Stratergy Interface
 class ImageFilterStratergy
 {
 public :
-    virtual void filter() = 0;
+    virtual void apply(Image& img) = 0;
     virtual ~ImageFilterStratergy() = default;
 };
 
@@ -13,45 +19,45 @@ public :
 class SepiaFilter : public ImageFilterStratergy
 {
 public :
-    void filter() override 
+    void apply(Image& img) override 
     {
-        std::cout<<"SepiaFiler filtering the image"<<std::endl;
+        std::cout<<"SepiaFiler filtering the image"<<img.name<<std::endl;
     }
 };
 
 class BlackAndWhiteFilter : public ImageFilterStratergy
 {
 public :
-    void filter() override 
+    void apply(Image& img) override 
     {
-        std::cout<<"BlackAndWhiteFilter filtering the image"<<std::endl;
+        std::cout<<"BlackAndWhiteFilter filtering the image"<<img.name<<std::endl;
     }
 };
 
 class BlurFilter : public ImageFilterStratergy
 {
 public :
-    void filter() override 
+    void apply(Image& img) override 
     {
-        std::cout<<"BlurFilter filtering the image"<<std::endl;
+        std::cout<<"BlurFilter filtering the image "<<img.name<<std::endl;
     }
 };
 
 //STEP 3: Context
-class ImageFilter 
+class ImageProcessor 
 {
     std::unique_ptr<ImageFilterStratergy> stratergy;
 public :
-    void setFilterStratergy(std::unique_ptr<ImageFilterStratergy> s)
+    void setStratergy(std::unique_ptr<ImageFilterStratergy> s)
     {
         stratergy = std::move(s);
     }
 
-    void processFilter()
+    void process(Image& img)
     {
         if(stratergy)
         {
-            stratergy->filter();
+            stratergy->apply(img);
         }
         else
             std::cout<<"Filter stratergy not set"<<std::endl;
@@ -60,16 +66,17 @@ public :
 
 int main()
 {
-    ImageFilter filter;
+    Image photo("holiday.jpg");
+    ImageProcessor imgProcessor;
 
-    filter.setFilterStratergy(std::make_unique<SepiaFilter>());
-    filter.processFilter();
+    imgProcessor.setStratergy(std::make_unique<SepiaFilter>());
+    imgProcessor.process(photo);
 
-    filter.setFilterStratergy(std::make_unique<BlackAndWhiteFilter>());
-    filter.processFilter();
+    imgProcessor.setStratergy(std::make_unique<BlackAndWhiteFilter>());
+    imgProcessor.process(photo);
 
-    filter.setFilterStratergy(std::make_unique<BlurFilter>());
-    filter.processFilter();
+    imgProcessor.setStratergy(std::make_unique<BlurFilter>());
+    imgProcessor.process(photo);
     
     return 0;
 }
