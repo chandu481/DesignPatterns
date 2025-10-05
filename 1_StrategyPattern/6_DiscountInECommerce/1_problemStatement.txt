@@ -1,0 +1,12 @@
+Example: Discount Strategy in E-commerce
+🎯 Problem:
+
+You have different discount algorithms:
+
+Seasonal discount (10%)
+
+Black Friday (50%)
+
+No discount
+
+You can apply the chosen one at runtime.
