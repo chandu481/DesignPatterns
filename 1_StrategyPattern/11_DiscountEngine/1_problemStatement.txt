@@ -1,0 +1,6 @@
+Apply discounts for an order 
+SeasonalDiscount → 10% off everything during a sale.
+
+LoyaltyDiscount → 5% off for customerTier >= 2.
+
+NoDiscount → returns total unchanged (a Null Object pattern).
