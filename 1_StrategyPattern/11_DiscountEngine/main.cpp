@@ -20,7 +20,7 @@ class SeasonalDiscount : public DiscountStrategy
 public :
     double applyDiscount(const Order& order) override 
     {
-        return order.price * 0.1;  // 10% off
+        return order.price * 0.90;  // 10% off
     }
 };
 
@@ -59,7 +59,7 @@ public :
 
     double calculateTotal(const Order& order)
     {
-        return strategy->applyDiscount(order);
+        return  strategy ? strategy->applyDiscount(order) : order.price;
     }
 };
 
