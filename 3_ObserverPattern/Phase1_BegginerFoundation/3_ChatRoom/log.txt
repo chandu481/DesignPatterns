@@ -1,0 +1,3 @@
+[ROOM] [From : Chandu] msg: Hi All
+[ROOM] [From : Charan] msg: Hi Chandu how are you!
+[ROOM] [From : Chandu] msg: Bye all
